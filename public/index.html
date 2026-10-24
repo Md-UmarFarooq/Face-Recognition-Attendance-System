@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Attendance Registry &middot; Face Verification Kiosk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- ============================================================ SPLASH -->
+<section class="screen screen--splash" id="screen-splash" data-active="true">
+  <div class="splash">
+    <div class="seal" aria-hidden="true">
+      <svg viewBox="0 0 120 120" width="88" height="88">
+        <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="60" cy="60" r="46" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M60 30 L69 52 L93 52 L73 66 L81 90 L60 75 L39 90 L47 66 L27 52 L51 52 Z"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p class="eyebrow" id="college-eyebrow">Registry Kiosk</p>
+    <h1 class="college-name" id="college-name">Face Recognition Attendance System</h1>
+    <p class="tagline">Attendance Registry &mdash; Facial Verification</p>
+    <div class="hairline"></div>
+    <button class="btn btn--stamp" id="btn-enter">
+      <span>Enter System</span>
+    </button>
+    <p class="splash-foot">No. of enrolled records &amp; today&rsquo;s ledger available inside</p>
+  </div>
+</section>
+
+<!-- ========================================================== MAIN MENU -->
+<section class="screen screen--menu" id="screen-menu" data-active="false">
+  <header class="topbar">
+    <div class="topbar__title">
+      <span class="topbar__eyebrow" id="menu-eyebrow">Registry Kiosk</span>
+      <span class="topbar__name" id="menu-college-name">Face Recognition Attendance System</span>
+    </div>
+  </header>
+
+  <div class="menu-grid">
+    <button class="ledger-card" data-nav="screen-register">
+      <span class="ledger-card__no">No. 01</span>
+      <span class="ledger-card__title">Register Student</span>
+      <p class="ledger-card__desc">Enroll a new student: academic details plus a facial reference scan.</p>
+      <span class="ledger-card__go">Open &rarr;</span>
+    </button>
+
+    <button class="ledger-card" data-nav="screen-verify">
+      <span class="ledger-card__no">No. 02</span>
+      <span class="ledger-card__title">Verify &amp; Mark Attendance</span>
+      <p class="ledger-card__desc">Scan a live face against enrolled records to log today&rsquo;s attendance.</p>
+      <span class="ledger-card__go">Open &rarr;</span>
+    </button>
+
+    <button class="ledger-card" data-nav="screen-ledger">
+      <span class="ledger-card__no">No. 03</span>
+      <span class="ledger-card__title">Attendance Ledger</span>
+      <p class="ledger-card__desc">Review today&rsquo;s recorded attendance and export it as CSV.</p>
+      <span class="ledger-card__go">Open &rarr;</span>
+    </button>
+  </div>
+</section>
+
+<!-- ============================================================ REGISTER -->
+<section class="screen screen--wide" id="screen-register" data-active="false">
+  <header class="subbar">
+    <button class="btn btn--back" data-nav="screen-menu">&larr; Menu</button>
+    <h2>Register Student <span class="subbar__no">No. 01</span></h2>
+  </header>
+
+  <div class="split">
+    <form class="card card--form" id="register-form" autocomplete="off">
+      <div class="field">
+        <label for="reg-name">Full Name</label>
+        <input type="text" id="reg-name" required placeholder="e.g. Ananya Sharma" />
+      </div>
+      <div class="field">
+        <label for="reg-regno">Registration Number</label>
+        <input type="text" id="reg-regno" required placeholder="e.g. 21CS1042" class="mono" />
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="reg-branch">Branch</label>
+          <select id="reg-branch" required>
+            <option value="" disabled selected>Select branch</option>
+            <option>Computer Science</option>
+            <option>Information Technology</option>
+            <option>Electronics</option>
+            <option>Electrical</option>
+            <option>Mechanical</option>
+            <option>Civil</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="reg-course">Course</label>
+          <select id="reg-course" required>
+            <option value="" disabled selected>Select course</option>
+            <option>B.Tech</option>
+            <option>M.Tech</option>
+            <option>BCA</option>
+            <option>MCA</option>
+            <option>Diploma</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="reg-year">Year</label>
+          <select id="reg-year" required>
+            <option value="" disabled selected>Select year</option>
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="reg-semester">Semester</label>
+          <select id="reg-semester" required>
+            <option value="" disabled selected>Select semester</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="status-line" id="register-status" role="status"></p>
+      <button type="submit" class="btn btn--brass" id="btn-capture-register">Capture Face &amp; Register</button>
+    </form>
+
+    <div class="card card--scan">
+      <div class="aperture" id="aperture-register">
+        <video id="video-register" autoplay muted playsinline></video>
+        <canvas id="overlay-register"></canvas>
+        <div class="aperture__corners">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="aperture__ring" id="ring-register"></div>
+      </div>
+      <p class="aperture__hint" id="hint-register">Fill in the form, then press &ldquo;Capture Face &amp; Register&rdquo; to begin the scan.</p>
+      <p class="aperture__count" id="count-register"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== VERIFY -->
+<section class="screen screen--wide" id="screen-verify" data-active="false">
+  <header class="subbar">
+    <button class="btn btn--back" data-nav="screen-menu">&larr; Menu</button>
+    <h2>Verify &amp; Mark Attendance <span class="subbar__no">No. 02</span></h2>
+  </header>
+
+  <div class="verify-layout">
+    <div class="card card--scan card--scan-lg">
+      <div class="aperture aperture--lg" id="aperture-verify">
+        <video id="video-verify" autoplay muted playsinline></video>
+        <canvas id="overlay-verify"></canvas>
+        <div class="aperture__corners">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="aperture__ring" id="ring-verify"></div>
+      </div>
+    </div>
+
+    <div class="card card--form card--verify-form">
+      <div class="field">
+        <label for="verify-regno">Registration Number <span class="optional">(optional)</span></label>
+        <input type="text" id="verify-regno" placeholder="Leave blank to auto-identify" class="mono" />
+      </div>
+      <p class="field-hint">If provided, the scan is matched against that one record (1:1). If left blank, the scan is matched against every enrolled student (1:N).</p>
+
+      <button class="btn btn--brass" id="btn-start-verify">Start Face Verification</button>
+
+      <div class="result-panel" id="verify-result" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== LEDGER -->
+<section class="screen screen--wide" id="screen-ledger" data-active="false">
+  <header class="subbar">
+    <button class="btn btn--back" data-nav="screen-menu">&larr; Menu</button>
+    <h2>Attendance Ledger <span class="subbar__no">No. 03</span></h2>
+    <div class="subbar__actions">
+      <input type="date" id="ledger-date" class="mono" />
+      <button class="btn btn--ghost" id="btn-refresh-ledger">Refresh</button>
+      <button class="btn btn--brass" id="btn-export-ledger">Export CSV</button>
+    </div>
+  </header>
+
+  <div class="card card--table">
+    <table class="ledger-table">
+      <thead>
+        <tr>
+          <th class="col-no">No.</th>
+          <th>Reg. No</th>
+          <th>Name</th>
+          <th>Branch</th>
+          <th>Course</th>
+          <th>Year</th>
+          <th>Sem</th>
+          <th>Time</th>
+          <th>Attendance %</th>
+        </tr>
+      </thead>
+      <tbody id="ledger-body">
+        <tr class="ledger-empty">
+          <td colspan="9">No attendance recorded for this date yet.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- toast -->
+<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+<script src="js/lib/face-api.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/face.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
